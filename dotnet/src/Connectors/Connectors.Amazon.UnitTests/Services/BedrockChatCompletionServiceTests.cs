@@ -29,7 +29,7 @@ public sealed class BedrockChatCompletionServiceTests
         // Arrange & Act
         string modelId = "amazon.titan-text-premier-v1:0";
         var mockBedrockApi = new Mock<IAmazonBedrockRuntime>();
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
 
         // Assert
@@ -47,7 +47,7 @@ public sealed class BedrockChatCompletionServiceTests
         var mockBedrockApi = new Mock<IAmazonBedrockRuntime>();
 
         // Act
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(invalidModelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(invalidModelId, bedrockRuntime: mockBedrockApi.Object).Build();
 
         // Assert
         Assert.Throws<KernelException>(() =>
@@ -65,7 +65,7 @@ public sealed class BedrockChatCompletionServiceTests
         var mockBedrockApi = new Mock<IAmazonBedrockRuntime>();
 
         // Act
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(emptyModelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(emptyModelId, bedrockRuntime: mockBedrockApi.Object).Build();
 
         // Assert
         Assert.Throws<KernelException>(() =>
@@ -86,7 +86,7 @@ public sealed class BedrockChatCompletionServiceTests
         // Act & Assert
         await Assert.ThrowsAnyAsync<Exception>(async () =>
         {
-            var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, nullBedrockRuntime).Build();
+            var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: nullBedrockRuntime).Build();
             var service = kernel.GetRequiredService<IChatCompletionService>();
             await service.GetChatMessageContentsAsync(chatHistory).ConfigureAwait(true);
         }).ConfigureAwait(true);
@@ -108,7 +108,7 @@ public sealed class BedrockChatCompletionServiceTests
             });
         mockBedrockApi.Setup(m => m.ConverseAsync(It.IsAny<ConverseRequest>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(this.CreateConverseResponse("Hello, world!", ConversationRole.Assistant));
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var chatHistory = CreateSampleChatHistory();
 
@@ -145,7 +145,7 @@ public sealed class BedrockChatCompletionServiceTests
                 Stream = new ConverseStreamOutput(new MemoryStream(content))
             });
 
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var chatHistory = CreateSampleChatHistory();
 
@@ -186,7 +186,7 @@ public sealed class BedrockChatCompletionServiceTests
             });
         mockBedrockApi.Setup(m => m.ConverseAsync(It.IsAny<ConverseRequest>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(this.CreateConverseResponse("Hello, world!", ConversationRole.Assistant));
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var chatHistory = CreateSampleChatHistory();
 
@@ -220,7 +220,7 @@ public sealed class BedrockChatCompletionServiceTests
             .ReturnsAsync(this.CreateConverseResponse("I'm doing well.", ConversationRole.Assistant))
             .ReturnsAsync(this.CreateConverseResponse("That's great to hear!", ConversationRole.User));
 
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var chatHistory = CreateSampleChatHistory();
 
@@ -281,7 +281,7 @@ public sealed class BedrockChatCompletionServiceTests
         var chatHistory = new ChatHistory();
         mockBedrockApi.SetupSequence(m => m.ConverseAsync(It.IsAny<ConverseRequest>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(this.CreateConverseResponse("hi", ConversationRole.Assistant));
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
 
         // Act & Assert
@@ -314,7 +314,7 @@ public sealed class BedrockChatCompletionServiceTests
                 StopReason = StopReason.Max_tokens,
                 Usage = new TokenUsage()
             });
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var chatHistory = CreateSampleChatHistory();
 
@@ -339,7 +339,7 @@ public sealed class BedrockChatCompletionServiceTests
             });
         mockBedrockApi.Setup(m => m.ConverseAsync(It.IsAny<ConverseRequest>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(this.CreateConverseResponse("Hello", (ConversationRole)"bad_role"));
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var chatHistory = CreateSampleChatHistory();
 
@@ -364,7 +364,7 @@ public sealed class BedrockChatCompletionServiceTests
             });
         mockBedrockApi.Setup(m => m.ConverseAsync(It.IsAny<ConverseRequest>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(this.CreateConverseResponse("hello", ConversationRole.Assistant));
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var chatHistory = new ChatHistory();
         chatHistory.AddUserMessage(string.Empty); // Add an empty user message

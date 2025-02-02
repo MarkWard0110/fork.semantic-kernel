@@ -28,7 +28,7 @@ public class BedrockServiceCollectionExtensionTests
         var bedrockRuntime = new Mock<IAmazonBedrockRuntime>().Object;
 
         // Act
-        services.AddBedrockChatCompletionService(modelId, bedrockRuntime);
+        services.AddBedrockChatCompletionService(modelId, bedrockRuntime: bedrockRuntime);
         var serviceProvider = services.BuildServiceProvider();
 
         // Assert

@@ -43,7 +43,7 @@ public class BedrockKernelBuilderExtensionTests
         // Arrange
         var bedrockRuntime = new Mock<IAmazonBedrockRuntime>().Object;
         var builder = Kernel.CreateBuilder();
-        builder.AddBedrockChatCompletionService("amazon.titan-text-premier-v1:0", bedrockRuntime);
+        builder.AddBedrockChatCompletionService("amazon.titan-text-premier-v1:0", bedrockRuntime: bedrockRuntime);
 
         // Act
         var kernel = builder.Build();

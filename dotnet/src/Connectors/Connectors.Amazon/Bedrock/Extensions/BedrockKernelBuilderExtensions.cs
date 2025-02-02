@@ -14,18 +14,20 @@ public static class BedrockKernelBuilderExtensions
     /// </summary>
     /// <param name="builder">The kernel builder.</param>
     /// <param name="modelId">The model for chat completion.</param>
+    /// <param name="inferenceProfileId">The optional inference ID.</param>
     /// <param name="bedrockRuntime">The optional <see cref="IAmazonBedrockRuntime" /> to use. If not provided will be retrieved from the Service Collection.</param>
     /// <param name="serviceId">The optional service ID.</param>
     /// <returns>Returns back <see cref="IKernelBuilder"/> with a configured service.</returns>
     public static IKernelBuilder AddBedrockChatCompletionService(
         this IKernelBuilder builder,
         string modelId,
+        string? inferenceProfileId = null,
         IAmazonBedrockRuntime? bedrockRuntime = null,
         string? serviceId = null)
     {
         Verify.NotNull(builder);
 
-        builder.Services.AddBedrockChatCompletionService(modelId, bedrockRuntime, serviceId);
+        builder.Services.AddBedrockChatCompletionService(modelId, bedrockRuntime: bedrockRuntime, inferenceProfileId: inferenceProfileId, serviceId: serviceId);
 
         return builder;
     }
