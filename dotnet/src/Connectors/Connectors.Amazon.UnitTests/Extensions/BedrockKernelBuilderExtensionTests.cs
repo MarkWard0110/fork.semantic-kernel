@@ -48,7 +48,7 @@ public class BedrockKernelBuilderExtensionTests
         // Arrange
         var bedrockRuntime = new Mock<IAmazonBedrockRuntime>().Object;
         var builder = Kernel.CreateBuilder();
-        builder.AddBedrockChatCompletionService(modelId, bedrockRuntime);
+        builder.AddBedrockChatCompletionService(modelId, bedrockRuntime: bedrockRuntime);
 
         // Act
         var kernel = builder.Build();

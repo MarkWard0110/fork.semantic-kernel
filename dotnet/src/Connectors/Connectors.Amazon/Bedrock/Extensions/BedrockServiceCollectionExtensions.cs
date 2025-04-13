@@ -23,12 +23,14 @@ public static class BedrockServiceCollectionExtensions
     /// </summary>
     /// <param name="service">The service collection.</param>
     /// <param name="modelId">The model for chat completion.</param>
+    /// <param name="inferenceProfileId">The optional inference ID.</param>
     /// <param name="bedrockRuntime">The optional <see cref="IAmazonBedrockRuntime" /> to use. If not provided will be retrieved from the Service Collection.</param>
     /// <param name="serviceId">The optional service ID.</param>
     /// <returns>Returns back <see cref="IServiceCollection"/> with a configured service.</returns>
     public static IServiceCollection AddBedrockChatCompletionService(
         this IServiceCollection service,
         string modelId,
+        string? inferenceProfileId = null,
         IAmazonBedrockRuntime? bedrockRuntime = null,
         string? serviceId = null)
     {
@@ -52,7 +54,7 @@ public static class BedrockServiceCollectionExtensions
                     // Cast to AmazonServiceClient and subscribe to the event
                     ((AmazonServiceClient)runtime).BeforeRequestEvent += BedrockClientUtilities.BedrockServiceClientRequestHandler;
                 }
-                return new BedrockChatCompletionService(modelId, runtime, logger);
+                return new BedrockChatCompletionService(modelId, runtime, inferenceProfileId: inferenceProfileId, logger);
             }
             catch (Exception ex)
             {

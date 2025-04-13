@@ -22,6 +22,7 @@ namespace Microsoft.SemanticKernel.Connectors.Amazon.Core;
 internal sealed class BedrockChatCompletionClient
 {
     private readonly string _modelId;
+    private readonly string? _inferenceProfileId;
     private readonly string _modelProvider;
     private readonly IAmazonBedrockRuntime _bedrockRuntime;
     private readonly IBedrockChatCompletionService _ioChatService;
@@ -33,11 +34,13 @@ internal sealed class BedrockChatCompletionClient
     /// </summary>
     /// <param name="modelId">The model ID for the client.</param>
     /// <param name="bedrockRuntime">The <see cref="IAmazonBedrockRuntime"/> instance to be used for Bedrock runtime actions.</param>
+    /// <param name="inferenceProfileId">The inference profile ID to be used for the client.</param>
     /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to use for logging. If null, no logging will be performed.</param>
-    internal BedrockChatCompletionClient(string modelId, IAmazonBedrockRuntime bedrockRuntime, ILoggerFactory? loggerFactory = null)
+    internal BedrockChatCompletionClient(string modelId, IAmazonBedrockRuntime bedrockRuntime, string? inferenceProfileId = null, ILoggerFactory? loggerFactory = null)
     {
         var serviceFactory = new BedrockServiceFactory();
         this._modelId = modelId;
+        this._inferenceProfileId = inferenceProfileId;
         this._bedrockRuntime = bedrockRuntime;
         this._ioChatService = serviceFactory.CreateChatCompletionService(modelId);
         this._modelProvider = serviceFactory.GetModelProviderAndName(modelId).modelProvider;
@@ -62,7 +65,7 @@ internal sealed class BedrockChatCompletionClient
         CancellationToken cancellationToken = default)
     {
         Verify.NotNullOrEmpty(chatHistory);
-        ConverseRequest converseRequest = this._ioChatService.GetConverseRequest(this._modelId, chatHistory, executionSettings);
+        ConverseRequest converseRequest = this._ioChatService.GetConverseRequest(this._inferenceProfileId ?? this._modelId, chatHistory, executionSettings);
         var regionEndpoint = this._bedrockRuntime.DetermineServiceOperationEndpoint(converseRequest).URL;
         this._chatGenerationEndpoint = new Uri(regionEndpoint);
         ConverseResponse? response = null;
@@ -152,7 +155,7 @@ internal sealed class BedrockChatCompletionClient
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         // Set up variables for starting completion activity
-        var converseStreamRequest = this._ioChatService.GetConverseStreamRequest(this._modelId, chatHistory, executionSettings);
+        var converseStreamRequest = this._ioChatService.GetConverseStreamRequest(this._inferenceProfileId ?? this._modelId, chatHistory, executionSettings);
         var regionEndpoint = this._bedrockRuntime.DetermineServiceOperationEndpoint(converseStreamRequest).URL;
         this._chatGenerationEndpoint = new Uri(regionEndpoint);
         ConverseStreamResponse? response = null;

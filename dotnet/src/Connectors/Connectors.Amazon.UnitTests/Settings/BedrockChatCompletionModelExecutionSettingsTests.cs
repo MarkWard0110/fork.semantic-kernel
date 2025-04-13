@@ -39,7 +39,7 @@ public class BedrockChatCompletionModelExecutionSettingsTests
             TopP = -0.5f,
             MaxTokenCount = -100
         };
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var chatHistory = CreateSampleChatHistory();
 
@@ -89,7 +89,7 @@ public class BedrockChatCompletionModelExecutionSettingsTests
                 StopReason = StopReason.Max_tokens,
                 Usage = new TokenUsage()
             });
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var chatHistory = CreateSampleChatHistory();
 
@@ -151,7 +151,7 @@ public class BedrockChatCompletionModelExecutionSettingsTests
                 StopReason = StopReason.Max_tokens,
                 Usage = new TokenUsage()
             });
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var chatHistory = CreateSampleChatHistory();
 
@@ -206,7 +206,7 @@ public class BedrockChatCompletionModelExecutionSettingsTests
                 StopReason = StopReason.Max_tokens,
                 Usage = new TokenUsage()
             });
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var chatHistory = CreateSampleChatHistory();
 
@@ -265,7 +265,7 @@ public class BedrockChatCompletionModelExecutionSettingsTests
                 StopReason = StopReason.Max_tokens,
                 Usage = new TokenUsage()
             });
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var chatHistory = CreateSampleChatHistory();
 
@@ -320,7 +320,7 @@ public class BedrockChatCompletionModelExecutionSettingsTests
                 StopReason = StopReason.Max_tokens,
                 Usage = new TokenUsage()
             });
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var chatHistory = CreateSampleChatHistory();
 
@@ -378,7 +378,7 @@ public class BedrockChatCompletionModelExecutionSettingsTests
                 StopReason = StopReason.Max_tokens,
                 Usage = new TokenUsage()
             });
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var chatHistory = CreateSampleChatHistory();
 
@@ -436,7 +436,7 @@ public class BedrockChatCompletionModelExecutionSettingsTests
                 StopReason = StopReason.Max_tokens,
                 Usage = new TokenUsage()
             });
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var chatHistory = CreateSampleChatHistory();
 
@@ -491,7 +491,7 @@ public class BedrockChatCompletionModelExecutionSettingsTests
                 StopReason = StopReason.Max_tokens,
                 Usage = new TokenUsage()
             });
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var chatHistory = CreateSampleChatHistory();
 
@@ -551,7 +551,7 @@ public class BedrockChatCompletionModelExecutionSettingsTests
                 StopReason = StopReason.Max_tokens,
                 Usage = new TokenUsage()
             });
-        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, mockBedrockApi.Object).Build();
+        var kernel = Kernel.CreateBuilder().AddBedrockChatCompletionService(modelId, bedrockRuntime: mockBedrockApi.Object).Build();
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var chatHistory = CreateSampleChatHistory();
 
