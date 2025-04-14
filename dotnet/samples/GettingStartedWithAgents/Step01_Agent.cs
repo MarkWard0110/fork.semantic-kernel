@@ -29,6 +29,20 @@ public class Step01_Agent(ITestOutputHelper output) : BaseAgentsTest(output)
                 Kernel = this.CreateKernelWithChatCompletion(),
             };
 
+        ChatCompletionAgent agents =
+    new()
+    {
+        Kernel = this.CreateKernelWithChatCompletion(),
+        Instructions =
+            """
+                    Write a one verse poem on the requested topic in the style of {{$style}}.
+                    Always state the requested style of the poem.
+                    """,
+        Arguments = new KernelArguments()
+        {
+                    {"style", "haiku"}
+        }
+    };
         /// Create the chat history to capture the agent interaction.
         ChatHistory chat = [];
 
